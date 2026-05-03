@@ -10,8 +10,29 @@ app.secret_key = "secret"
 
 
 conn = sqlite3.connect('database.db', check_same_thread=False)
+conn.row_factory = sqlite3.Row   # ✅ ADD THIS LINE
 cursor = conn.cursor()
 
+cursor.execute('''
+CREATE TABLE IF NOT EXISTS users (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name TEXT,
+    email TEXT,
+    password TEXT
+)
+''')
+
+cursor.execute('''
+CREATE TABLE IF NOT EXISTS products (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name TEXT,
+    price INTEGER,
+    category TEXT,
+    image TEXT
+)
+''')
+
+conn.commit()
 
 # ================= HOME =================
 @app.route('/')
@@ -37,10 +58,10 @@ def register():
             return "Password must be exactly 6 digits"
 
         cursor.execute(
-            "INSERT INTO users (name,email,password) VALUES (%s,%s,%s)",
-            (name,email,password)
+        "INSERT INTO users (name,email,password) VALUES (?,?,?)",
+        (name,email,password)
         )
-        db.commit()
+        conn.commit()
 
         return redirect('/login')
 
@@ -55,8 +76,8 @@ def login():
         password = request.form['password']
 
         cursor.execute(
-            "SELECT * FROM users WHERE email=%s AND password=%s",
-            (email,password)
+        "SELECT * FROM users WHERE email=? AND password=?",
+        (email, password)
         )
         user = cursor.fetchone()
 
