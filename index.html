@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+
+</div>
+    <header class="navbar">
+    <h2 class="logo">Furniture</h2>
+
+    <div class="search-box">
+        <input type="text" placeholder="Search furniture...">
+        <button>🔍</button>
+    </div>
+
+    <div class="nav-links">
+        <a href="/cart">Cart</a>
+        <a href="/logout">Logout</a>
+    </div>
+</header>
+    <section class="hero">
+    <div class="hero-text">
+        <h1>GET START YOUR FAVORITE FURNITURE</h1>
+        <button>BUY NOW</button>
+    </div>
+</section>
+<h2 class="title">Shop by Category</h2>
+
+<div class="category-grid">
+
+    <a href="/category/bed" class="category-card bed">
+        <h3>Beds</h3>
+    </a>
+
+    <a href="/category/chair" class="category-card chair">
+        <h3>Chairs</h3>
+    </a>
+
+    <a href="/category/table" class="category-card table">
+        <h3>Tables</h3>
+    </a>
+
+</div>
+
+<h2 style="margin:20px;">Trending Products</h2>
+
+<div class="product-container">
+    {% for p in products %}
+    
+    <div class="product-card">
+        <img src="{{ url_for('static', filename='images/' + p.image) }}">
+
+        <h3>{{ p.name }}</h3>
+        <p class="price">₹{{ p.price }}</p>
+
+        <a href="/buy/{{ p.id }}" class="btn buy">Buy Now</a>
+        <a href="/add_to_cart/{{ p.id }}" class="btn cart">Add to Cart</a>
+    </div>
+
+    {% endfor %}
+</div>
+<footer class="footer">
+    <p>© 2026 Furniture Store</p>
+</footer>
+
+</body>
+</html>

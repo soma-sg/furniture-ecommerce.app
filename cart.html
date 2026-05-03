@@ -1,0 +1,39 @@
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- ✅ TOP BAR FIRST -->
+
+<div class="navbar">
+    <h2>Furniture Store</h2>
+    <div>
+        <a href="/">Home</a>
+        <a href="/cart">Cart</a>
+        <a href="/login">Login</a>
+    </div>
+</div>
+<div class="top-bar">
+    <h2>Your Cart</h2>
+    <a href="/" class="home-btn">Home</a>
+</div>
+
+<!-- ✅ PRODUCTS -->
+<div class="cart-container">
+    {% for item in cart %}
+    <div class="cart-card">
+
+        <img src="{{ url_for('static', filename='images/' + item.image) }}">
+
+        <div class="cart-info">
+            <h3>{{ item.name }}</h3>
+            <p>₹{{ item.price }}</p>
+
+            <a href="/buy/{{ item.id }}" class="btn buy">Buy</a>
+            <a href="/remove_from_cart/{{ item.id }}" class="btn remove">Remove</a>
+        </div>
+
+    </div>
+    {% endfor %}
+</div>
+<footer class="footer">
+    <p>© 2026 Furniture Store</p>
+</footer>
